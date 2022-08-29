@@ -1,0 +1,72 @@
+# DNA to RNA to PROTEIN
+def translation(dna):
+    str_len = len(dna)
+    extra = str_len % 3
+
+    if extra > 0:
+        str_new = dna[:-extra].upper()
+        dna = str_new.upper()
+    print("\n          -----*****-----\n")
+    print("     Recognized DNA seq. : " + dna)
+
+    rna_map = dna.maketrans("ATGC", "UACG")
+    RNA = dna.translate(rna_map)
+
+    print("     Your mRNA seq. : " + RNA)
+    RNA_Codons = {
+        # 'M' - START, '*' - STOP
+        "GCU": "A", "GCC": "A", "GCA": "A", "GCG": "A",
+        "UGU": "C", "UGC": "C",
+        "GAU": "D", "GAC": "D",
+        "GAA": "E", "GAG": "E",
+        "UUU": "F", "UUC": "F",
+        "GGU": "G", "GGC": "G", "GGA": "G", "GGG": "G",
+        "CAU": "H", "CAC": "H",
+        "AUA": "I", "AUU": "I", "AUC": "I",
+        "AAA": "K", "AAG": "K",
+        "UUA": "L", "UUG": "L", "CUU": "L", "CUC": "L", "CUA": "L", "CUG": "L",
+        "AUG": "M",
+        "AAU": "N", "AAC": "N",
+        "CCU": "P", "CCC": "P", "CCA": "P", "CCG": "P",
+        "CAA": "Q", "CAG": "Q",
+        "CGU": "R", "CGC": "R", "CGA": "R", "CGG": "R", "AGA": "R", "AGG": "R",
+        "UCU": "S", "UCC": "S", "UCA": "S", "UCG": "S", "AGU": "S", "AGC": "S",
+        "ACU": "T", "ACC": "T", "ACA": "T", "ACG": "T",
+        "GUU": "V", "GUC": "V", "GUA": "V", "GUG": "V",
+        "UGG": "W",
+        "UAU": "Y", "UAC": "Y",
+        "UAA": "*", "UAG": "*", "UGA": "*"
+    }
+    protein = ""
+    for i in range(0, len(RNA), 3):
+        codon = RNA[i:i + 3]
+        protein += RNA_Codons[codon]
+    return protein
+
+
+DNA = input(
+    "\n----- WELCOME TO DNA TRANSLATOR PROGRAM ----- \n               ***********\n Please input your DNA seq. :  ").upper()
+print("     The AA seq. (protein) : " + translation(DNA))
+print("\n          -----*****-----\n")
+About = '''\n   This program is developed by:\n
+                 Thomas Masresha       
+                 \n        AASTU/College ofChemical and Biological engineering\n                     Department of biotechnology\n                              ISTP
+                        \n                            June 2022\n'''
+
+N = input("Do you want to continue to generate protein seq. Y/N:  ***or**  About(1): ").upper()
+while True:
+    if N == 'Y':
+        DNA = input("               ***********\n Please input your DNA seq. :  ").upper()
+        print("     The AA seq. (protein) : " + translation(DNA))
+        print("\n          -----*****-----\n")
+        N = input("Do you want to continue to generate protein seq. Y/N:  ***or**  About(1): ").upper()
+    elif N == '1':
+        print(About)
+        N = input("Do you want to continue to generate protein seq. Y/N:  **or**  About(1): ").upper()
+    elif N == 'N':
+        print("\n               ***********\n   ----- THANKS FOR CHOOSING US -----\n")
+        break
+    else:
+        while N not in 'YN':
+            print("Invalid input, please try again.")
+            N = input("Do you want to continue to generate protein seq. Y/N:  **or**  About(1): ").upper()
